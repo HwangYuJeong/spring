@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- dao 객체 생성 -->
+	<!-- GuestDao dao = new GuestDao() -->
+	<bean id="dao" class="com.hb.model.GuestDao"></bean>
+	<bean id="dto" class="com.hb.model.GuestVo">
+		<property name="sabun" value="1234"></property>
+		<property name="name" value="admin"></property>
+		<property name="pay" value="4321"></property>
+	</bean>
+<!-- handlerMapping -->
+	<bean id="handlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean>
+
+<!-- controller-mapping -->
+	<bean name="/main.do" class="com.hb.controller.IndexController">
+		<!-- <property name="msg" value="1234"></property> -->
+		<!-- <constructor-arg value="abcd"></constructor-arg>-->
+		<!-- <property name="bean" ref="dto"></property>-->
+	</bean>	
+	<bean name="/main2.do" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+		<property name="viewName" value="index"></property>
+	</bean>
+	<bean name="/list.do" class="com.hb.controller.ListController">
+		<property name="dao" ref="dao"></property>
+	</bean>
+	<bean name="/add.do" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+		<property name="viewName" value="guest/addform"></property>
+	</bean>
+	<bean name="/insert.do" class="com.hb.controller.AddController">
+		<constructor-arg ref="dao"></constructor-arg>
+	</bean>
+	<bean name="/detail.do" class="com.hb.controller.DetailController">
+		<property name="dao" ref="dao"></property>
+	</bean>
+	<bean name="/edit.do" class="com.hb.controller.EditController">
+		<property name="dao" ref="dao"></property>
+	</bean>
+	<bean name="/update.do" class="com.hb.controller.EditController">
+		<property name="dao" ref="dao"></property>
+	</bean>
+	<bean name="/del.do" class="com.hb.controller.DelController">
+		<property name="dao" ref="dao"></property>
+	</bean>
+<!-- viewResolver -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+</beans>
+ 
